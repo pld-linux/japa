@@ -1,21 +1,14 @@
-diff -dur japa-0.8.4.orig/source/Makefile japa-0.8.4/source/Makefile
---- japa-0.8.4.orig/source/Makefile	2013-07-01 12:07:44.000000000 +0200
-+++ japa-0.8.4/source/Makefile	2016-10-15 12:52:20.207337272 +0200
-@@ -24,15 +24,14 @@
- LIBDIR = lib$(SUFFIX)
- VERSION = 0.8.4
- CPPFLAGS += -DVERSION=\"$(VERSION)\" -DPREFIX=\"$(PREFIX)\" -I/usr/include/freetype2
--CXXFLAGS += -O2 -Wall -MMD -MP
+--- japa-0.9.2/source/Makefile.orig	2021-09-27 20:41:34.379853988 +0200
++++ japa-0.9.2/source/Makefile	2021-09-27 20:43:04.616031804 +0200
+@@ -23,9 +23,8 @@ BINDIR ?= $(PREFIX)/bin
+ 
+ VERSION = 0.9.2
+ CPPFLAGS += -MMD -MP -DVERSION=\"$(VERSION)\" -DPREFIX=\"$(PREFIX)\"
+-CPPFLAGS += $(shell pkgconf --cflags freetype2)
+-CXXFLAGS += -O2 -Wall
 -CXXFLAGS += -march=native
-+CXXFLAGS += -Wall -MMD -MP
- LDFLAGS += -L/usr/X11R6/$(LIBDIR)
- LDLIBS += -lzita-alsa-pcmi -lclthreads -lclxclient -lpthread -lfftw3f -ljack -lasound -lpthread -lXft -lX11 -lrt
++CPPFLAGS += $(shell pkg-config --cflags xft)
++CXXFLAGS += -Wall
+ LDLIBS += -lzita-alsa-pcmi -lclthreads -lclxclient -lasound -lpthread \
+ 	-lfftw3f -ljack -lXft -lX11 -lrt
  
- 
- JAPA_O = analyser.o audio.o gobjects.o japa.o mainwin.o styles.o rngen.o
- japa:	$(JAPA_O)
--	g++ $(LDFLAGS) -o $@ $(JAPA_O) $(LDLIBS)
-+	$(CXX) $(LDFLAGS) -o $@ $(JAPA_O) $(LDLIBS)
- 
- $(JAPA_O):
- -include $(JAPA_O:%.o=%.d)
