@@ -37,7 +37,7 @@ szumu) dostrajanie systemów PA.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch -P0 -p1
 
 %build
 CXX="%{__cxx}" \
